@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Protocol Sigma</string>
+    <string name="terminal_title">SISTEMA UPC/EETAC</string>
+    <string name="academic_terminal">TERMINAL ACADEMICA CLASIFICADA</string>
+    <string name="protocolo_sigma">PROTOCOLO\nSIGMA</string>
+    <string name="restricted_access">Acceso restringido al sistema</string>
+    <string name="init_auth">> init sigma.auth</string>
+    <string name="validating_creds">> validando credenciales EETAC...</string>
+    <string name="currency_detected">> moneda detectada: ECTS</string>
+    <string name="login">LOGIN</string>
+    <string name="registro">REGISTRO</string>
+    <string name="usuario">USUARIO</string>
+    <string name="password">PASSWORD</string>
+    <string name="username_hint">id.alumno</string>
+    <string name="password_hint">clave de acceso</string>
+    <string name="entrar_sistema">ENTRAR AL SISTEMA</string>
+    <string name="account_created">Cuenta creada. Ya estas dentro.</string>
+    <string name="inventario_desbloqueable">INVENTARIO DESBLOQUEABLE</string>
+    <string name="tienda_sigma">Tienda SIGMA</string>
+    <string name="user_ects">carla - 100 ECTS</string>
+    <string name="salir">SALIR</string>
+    <string name="misiones">MISIONES</string>
+    <string name="profesores">PROFESORES</string>
+    <string name="terminales">TERMINALES</string>
+    <string name="ects">ECTS</string>
+    <string name="comprar">COMPRAR</string>
+    <string name="objetos_recuperados">OBJETOS RECUPERADOS</string>
+    <string name="inventario">Inventario</string>
+    <string name="inventario_desc">Compra objetos para desbloquear nuevas pistas.</string>
+    <string name="nombre">NOMBRE</string>
+    <string name="contrasena">CONTRASEÑA</string>
+    <string name="crear_expediente">CREAR EXPEDIENTE</string>
+    <string name="nuevo_agente_hint">nuevo.agente</string>
+    <string name="nombre_jugador_hint">Nombre del jugador</string>
+    <string name="crear_clave_sigma_hint">crear clave SIGMA</string>
+</resources>
