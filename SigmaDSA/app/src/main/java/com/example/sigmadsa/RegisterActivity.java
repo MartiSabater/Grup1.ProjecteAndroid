@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -97,9 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // Inicialmente ocultamos el error de correo si queremos que solo aparezca al validar
-        // tvCorreoError.setVisibility(View.GONE);
-
         Button btnLoginTab = findViewById(R.id.btn_login_tab);
         btnLoginTab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,18 +112,33 @@ public class RegisterActivity extends AppCompatActivity {
         btnCrearExpediente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pass = etPassword.getText().toString();
-                String confirmPass = etConfirmPassword.getText().toString();
+                String username = etUsuario.getText().toString().trim();
+                String email = etCorreo.getText().toString().trim();
+                String name = etNombre.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                String confirmPass = etConfirmPassword.getText().toString().trim();
 
-                if (!pass.equals(confirmPass)) {
-                    tvPasswordError.setVisibility(View.VISIBLE);
-                } else {
-                    tvPasswordError.setVisibility(View.GONE);
-                    // Lógica de registro aquí
-                    android.content.Intent intent = new android.content.Intent(RegisterActivity.this, LoadingActivity.class);
-                    startActivity(intent);
-                    finish();
+                if (username.isEmpty() || email.isEmpty() || name.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Completa todos los campos para registrarte", Toast.LENGTH_LONG).show();
+                    return;
                 }
+
+                if (!password.equals(confirmPass)) {
+                    tvPasswordError.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                tvPasswordError.setVisibility(View.GONE);
+                tvCorreoError.setVisibility(View.GONE);
+
+                android.content.Intent intent = new android.content.Intent(RegisterActivity.this, LoadingActivity.class);
+                intent.putExtra(LoadingActivity.EXTRA_ACTION, LoadingActivity.ACTION_REGISTER);
+                intent.putExtra(LoadingActivity.EXTRA_USERNAME, username);
+                intent.putExtra(LoadingActivity.EXTRA_EMAIL, email);
+                intent.putExtra(LoadingActivity.EXTRA_NAME, name);
+                intent.putExtra(LoadingActivity.EXTRA_PASSWORD, password);
+                startActivity(intent);
+                finish();
             }
         });
     }
