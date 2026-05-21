@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sigmadsa.api.ApiClient;
@@ -12,6 +13,11 @@ import com.example.sigmadsa.api.LoginRequest;
 import com.example.sigmadsa.api.LoginResponse;
 import com.example.sigmadsa.api.RegisterRequest;
 import com.example.sigmadsa.api.RegisterResponse;
+
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,13 +77,13 @@ public class LoadingActivity extends AppCompatActivity {
                         }
                     }, 1500);
                 } else {
-                    String message = "Usuari no trobat o error de login";
-                    try {
-                        if (response.errorBody() != null) {
-                            message = response.errorBody().string();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String message = "Error: Usuario o contraseña incorrectos";
+                    if (response.code() == 404) {
+                        message = "Usuario no encontrado";
+                    } else if (response.code() == 401) {
+                        message = "Contraseña incorrecta";
+                    } else if (response.code() >= 500) {
+                        message = "Imposible conectarse con el servidor";
                     }
                     showErrorAndReturn(message, LoginActivity.class);
                 }
@@ -86,7 +92,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
-                showErrorAndReturn("Fallo de connexión: " + t.getClass().getSimpleName() + " - " + t.getMessage(), LoginActivity.class);
+                showErrorAndReturn(getConnectionErrorMessage(t), LoginActivity.class);
 
             }
         });
@@ -105,7 +111,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    tvLoadingText.setText("> Registre complet. Redirigint...");
+                    tvLoadingText.setText("Registro completo. Redirigiendo . . .");
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -113,13 +119,13 @@ public class LoadingActivity extends AppCompatActivity {
                         }
                     }, 1500);
                 } else {
-                    String message = "Error de registre.";
-                    try {
-                        if (response.errorBody() != null) {
-                            message = response.errorBody().string();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String message = "Error en el registro";
+                    if (response.code() == 400) {
+                        message = "Datos inválidos o usuario ya existe";
+                    } else if (response.code() == 409) {
+                        message = "El usuario ya existe";
+                    } else if (response.code() >= 500) {
+                        message = "Error del servidor. Intenta más tarde";
                     }
                     showErrorAndReturn(message, RegisterActivity.class);
                 }
@@ -128,13 +134,21 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 t.printStackTrace();
-                showErrorAndReturn("Fallo de connexión: " + t.getClass().getSimpleName() + " - " + t.getMessage(), RegisterActivity.class);
+                showErrorAndReturn(getConnectionErrorMessage(t), RegisterActivity.class);
             }
         });
     }
 
+    private String getConnectionErrorMessage(Throwable t) {
+        if (t instanceof IOException || t instanceof UnknownHostException || t instanceof ConnectException || t instanceof SocketTimeoutException) {
+            return "Error.";
+        }
+        return "Error: " + t.getClass().getSimpleName() + (t.getMessage() != null ? " - " + t.getMessage() : "");
+    }
+
     private void showErrorAndReturn(String errorMessage, Class<?> destination) {
         tvLoadingText.setText(errorMessage);
+        Toast.makeText(LoadingActivity.this, errorMessage, Toast.LENGTH_LONG).show();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -154,11 +168,9 @@ public class LoadingActivity extends AppCompatActivity {
 
     private void startDefaultLoading() {
         final String[] messages = {
-            "> Establiment de connexió segura...",
-            "> Desxifrant protocols SIGMA...",
-            "> Accedint a la base de dades EETAC...",
-            "> Verificant integritat del sistema...",
-            "> Accés concedit. Benvingut agent."
+            "> Estableciendo conexión ...",
+            "> Accediento a la base de datos de la EETAC...",
+            "> Acceso concedido. ¡ Bienvenido !."
         };
 
         for (int i = 0; i < messages.length; i++) {

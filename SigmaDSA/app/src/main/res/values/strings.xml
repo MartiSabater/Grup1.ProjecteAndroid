@@ -11,10 +11,10 @@
     <string name="registro">REGISTRO</string>
     <string name="usuario">USUARIO</string>
     <string name="password">PASSWORD</string>
-    <string name="username_hint">id.alumno</string>
-    <string name="password_hint">clave de acceso</string>
+    <string name="username_hint">Nombre de usuario</string>
+    <string name="password_hint">Contraseña</string>
     <string name="entrar_sistema">ENTRAR AL SISTEMA</string>
-    <string name="account_created">Cuenta creada. Ya estas dentro.</string>
+    <string name="account_created">Bienvenido.</string>
     <string name="inventario_desbloqueable">INVENTARIO DESBLOQUEABLE</string>
     <string name="tienda_sigma">Tienda SIGMA</string>
     <string name="user_ects">carla - 100 ECTS</string>
