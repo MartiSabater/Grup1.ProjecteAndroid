@@ -62,7 +62,7 @@ public class LoadingActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                if (response.isSuccessful() && response.body() != null) {
                     tvLoadingText.setText("");
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -71,9 +71,13 @@ public class LoadingActivity extends AppCompatActivity {
                         }
                     }, 1500);
                 } else {
-                    String message = "Usuario no encontrado";
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        message = response.body().getMessage();
+                    String message = "Usuari no trobat o error de login";
+                    try {
+                        if (response.errorBody() != null) {
+                            message = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     showErrorAndReturn(message, LoginActivity.class);
                 }
@@ -81,7 +85,9 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                showErrorAndReturn("Fallo de connexión: " + t.getMessage(), LoginActivity.class);
+                t.printStackTrace();
+                showErrorAndReturn("Fallo de connexión: " + t.getClass().getSimpleName() + " - " + t.getMessage(), LoginActivity.class);
+
             }
         });
     }
@@ -91,13 +97,14 @@ public class LoadingActivity extends AppCompatActivity {
         String email = getIntent().getStringExtra(EXTRA_EMAIL);
         String name = getIntent().getStringExtra(EXTRA_NAME);
         String password = getIntent().getStringExtra(EXTRA_PASSWORD);
+        String avatar = "avatar_1";
 
         ApiService apiService = ApiClient.getApiService();
-        Call<RegisterResponse> call = apiService.register(new RegisterRequest(username, email, name, password));
+        Call<RegisterResponse> call = apiService.register(new RegisterRequest(username, email, name, password, avatar));
         call.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                if (response.isSuccessful() && response.body() != null) {
                     tvLoadingText.setText("> Registre complet. Redirigint...");
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -107,8 +114,12 @@ public class LoadingActivity extends AppCompatActivity {
                     }, 1500);
                 } else {
                     String message = "Error de registre.";
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        message = response.body().getMessage();
+                    try {
+                        if (response.errorBody() != null) {
+                            message = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     showErrorAndReturn(message, RegisterActivity.class);
                 }
@@ -116,7 +127,8 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                showErrorAndReturn("Fallo de connexió: " + t.getMessage(), RegisterActivity.class);
+                t.printStackTrace();
+                showErrorAndReturn("Fallo de connexión: " + t.getClass().getSimpleName() + " - " + t.getMessage(), RegisterActivity.class);
             }
         });
     }
