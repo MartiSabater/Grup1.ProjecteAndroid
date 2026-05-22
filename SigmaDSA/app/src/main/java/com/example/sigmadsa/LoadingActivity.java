@@ -73,7 +73,7 @@ public class LoadingActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startShop();
+                            startShop(username);
                         }
                     }, 1500);
                 } else {
@@ -115,7 +115,7 @@ public class LoadingActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startShop();
+                            startShop(username);
                         }
                     }, 1500);
                 } else {
@@ -160,8 +160,9 @@ public class LoadingActivity extends AppCompatActivity {
         }, 2500);
     }
 
-    private void startShop() {
+    private void startShop(String username) {
         Intent intent = new Intent(LoadingActivity.this, ShopActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
         finish();
     }
@@ -186,7 +187,7 @@ public class LoadingActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startShop();
+                startShop("guest");
             }
         }, 5000);
     }

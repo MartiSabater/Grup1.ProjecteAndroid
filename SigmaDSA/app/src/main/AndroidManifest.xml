@@ -38,6 +38,10 @@
             android:name=".LoadingActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".InventarioActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

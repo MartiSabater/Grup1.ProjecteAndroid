@@ -595,6 +595,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_footer_label" />
 
+        <Button
+            android:id="@+id/btn_inventario_link"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/button_outline"
+            android:text="VEURE INVENTARI"
+            android:textColor="@color/shop_text_cyan"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
+            app:layout_constraintStart_toEndOf="@id/tv_inventario"
+            app:layout_constraintTop_toTopOf="@id/tv_inventario" />
+
         <TextView
             android:id="@+id/tv_inventario_desc"
             android:layout_width="wrap_content"

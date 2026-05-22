@@ -1,8 +1,15 @@
 package com.example.sigmadsa.api;
 
+import com.example.sigmadsa.models.Producto;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("auth/login")
@@ -10,4 +17,16 @@ public interface ApiService {
 
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest body);
+
+    @POST("tienda/comprar/{idProd}/{idUser}")
+    Call<Void> comprar(@Path("idProd") String idProd, @Path("idUser") String idUser);
+
+    @GET("usuarios/{idUser}/inventario")
+    Call<List<Producto>> getInventario(@Path("idUser") String idUser);
+
+    @GET("tienda/productos")
+    Call<List<BotiguaResponse>> getProductos();
+
+    @DELETE("tienda/inventario/{idProd}/{idUser}")
+    Call<Void> eliminarProducto(@Path("idProd") String idProd, @Path("idUser") String idUser);
 }
