@@ -1,5 +1,7 @@
 package com.example.sigmadsa;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Comprobar si hay una sesión activa
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String savedUsername = prefs.getString("username", null);
+        if (savedUsername != null) {
+            // Si ya hay usuario, vamos directo a la tienda
+            android.content.Intent intent = new android.content.Intent(this, ShopActivity.class);
+            intent.putExtra(LoadingActivity.EXTRA_USERNAME, savedUsername);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
 
         if (getSupportActionBar() != null) {

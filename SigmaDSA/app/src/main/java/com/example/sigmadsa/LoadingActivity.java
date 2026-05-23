@@ -1,6 +1,8 @@
 package com.example.sigmadsa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -69,6 +71,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    saveSession(username);
                     tvLoadingText.setText("");
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -111,6 +114,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    saveSession(username);
                     tvLoadingText.setText("Registro completo. Redirigiendo . . .");
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -165,6 +169,13 @@ public class LoadingActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
         finish();
+    }
+
+    private void saveSession(String username) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("username", username);
+        editor.apply();
     }
 
     private void startDefaultLoading() {

@@ -1,5 +1,8 @@
 package com.example.sigmadsa;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,11 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import com.example.sigmadsa.api.BotiguaResponse;
 
 import java.util.List;
@@ -51,7 +49,7 @@ public class ShopActivity extends AppCompatActivity {
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                logout();
             }
         });
 
@@ -146,5 +144,15 @@ public class ShopActivity extends AppCompatActivity {
                 Toast.makeText(ShopActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void logout() {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        prefs.edit().remove("username").apply();
+        
+        Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }
