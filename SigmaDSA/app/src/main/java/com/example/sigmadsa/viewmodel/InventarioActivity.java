@@ -1,6 +1,7 @@
-package com.example.sigmadsa;
+package com.example.sigmadsa.viewmodel;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,9 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sigmadsa.R;
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
-import com.example.sigmadsa.api.BotiguaResponse;
+import com.example.sigmadsa.models.Producto;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class InventarioActivity extends AppCompatActivity {
 
     private LinearLayout llLista;
     private ProgressBar pbLoading;
-    private String username;
+    private String userId;
     private ApiService apiService;
 
     @Override
@@ -40,8 +42,11 @@ public class InventarioActivity extends AppCompatActivity {
         Button btnTienda = findViewById(R.id.btn_tienda);
 
         apiService = ApiClient.getApiService();
-        username = getIntent().getStringExtra(LoadingActivity.EXTRA_USERNAME);
-        if (username == null) username = "guest";
+        userId = getIntent().getStringExtra(LoadingActivity.EXTRA_USER_ID);
+        if (userId == null) {
+            userId = getIntent().getStringExtra(LoadingActivity.EXTRA_USERNAME);
+        }
+        if (userId == null) userId = "guest";
 
         btnTienda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,26 +60,32 @@ public class InventarioActivity extends AppCompatActivity {
 
     private void cargarInventario() {
         pbLoading.setVisibility(View.VISIBLE);
-        apiService.getProductos().enqueue(new Callback<List<BotiguaResponse>>() {
+        apiService.getInventario(userId).enqueue(new Callback<List<Producto>>() {
             @Override
-            public void onResponse(Call<List<BotiguaResponse>> call, Response<List<BotiguaResponse>> response) {
+            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
                 pbLoading.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     mostrarItems(response.body());
                 } else {
-                    Toast.makeText(InventarioActivity.this, "Error al carregar productes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InventarioActivity.this, "Error al cargar inventario", Toast.LENGTH_SHORT).show();
+                }
+                if (response.isSuccessful() && response.body() != null) {
+                    mostrarItems(response.body());
+                } else {
+                    Log.e("Inventario", "code=" + response.code() + " error=" + response.errorBody());
+                    Toast.makeText(InventarioActivity.this, "Error al cargar inventario", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<BotiguaResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Producto>> call, Throwable t) {
                 pbLoading.setVisibility(View.GONE);
-                Toast.makeText(InventarioActivity.this, "Error de xarxa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InventarioActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void mostrarItems(List<BotiguaResponse> productos) {
+    private void mostrarItems(List<Producto> productos) {
         llLista.removeAllViews();
         if (productos.isEmpty()) {
             TextView emptyText = new TextView(this);
@@ -85,7 +96,7 @@ public class InventarioActivity extends AppCompatActivity {
             return;
         }
 
-        for (final BotiguaResponse p : productos) {
+        for (final Producto p : productos) {
             View itemView = getLayoutInflater().inflate(R.layout.shop_item_simple, null);
             TextView tvNombre = itemView.findViewById(R.id.tv_item_nombre);
             final Button btnEliminar = itemView.findViewById(R.id.btn_eliminar);
@@ -114,7 +125,7 @@ public class InventarioActivity extends AppCompatActivity {
     }
 
     private void eliminarDelInventario(final String idProd, final View btn) {
-        apiService.eliminarProducto(idProd, username).enqueue(new Callback<Void>() {
+        apiService.eliminarProducto(idProd, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {

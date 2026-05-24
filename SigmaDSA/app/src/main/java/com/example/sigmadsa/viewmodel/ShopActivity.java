@@ -1,4 +1,4 @@
-package com.example.sigmadsa;
+package com.example.sigmadsa.viewmodel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sigmadsa.R;
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
 import com.example.sigmadsa.api.BotiguaResponse;
@@ -23,6 +24,7 @@ import retrofit2.Response;
 public class ShopActivity extends AppCompatActivity {
 
     private String username;
+    private String userId;
     private ApiService apiService;
 
     @Override
@@ -37,10 +39,13 @@ public class ShopActivity extends AppCompatActivity {
         // Inicializamos el servicio de API
         apiService = ApiClient.getApiService();
         
-        // Obtenemos el username pasado desde LoadingActivity
+        // Obtenemos el userId (preferible) o username pasado desde LoadingActivity
+        userId = getIntent().getStringExtra(LoadingActivity.EXTRA_USER_ID);
         username = getIntent().getStringExtra(LoadingActivity.EXTRA_USERNAME);
-        if (username == null) {
-            username = "guest";
+        if (userId == null) {
+            // fallback a username o guest
+            if (username == null) username = "guest";
+            userId = username;
         }
 
         cargarProductos();
@@ -59,7 +64,7 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 android.content.Intent intent = new android.content.Intent(ShopActivity.this, InventarioActivity.class);
-                intent.putExtra(LoadingActivity.EXTRA_USERNAME, username);
+                intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
                 startActivity(intent);
             }
         });
@@ -128,7 +133,7 @@ public class ShopActivity extends AppCompatActivity {
 
     private void ejecutarCompra(final String idProd) {
         // Realizamos la petición POST: /tienda/comprar/{idProd}/{idUser}
-        Call<Void> call = apiService.comprar(idProd, username);
+        Call<Void> call = apiService.comprar(idProd, userId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -148,7 +153,7 @@ public class ShopActivity extends AppCompatActivity {
 
     private void logout() {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        prefs.edit().remove("username").apply();
+        prefs.edit().remove("username").remove("userId").apply();
         
         Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

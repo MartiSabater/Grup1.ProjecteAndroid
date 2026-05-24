@@ -1,4 +1,4 @@
-package com.example.sigmadsa;
+package com.example.sigmadsa.viewmodel;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sigmadsa.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

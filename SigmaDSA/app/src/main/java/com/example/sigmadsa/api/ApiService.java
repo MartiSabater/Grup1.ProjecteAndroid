@@ -21,7 +21,7 @@ public interface ApiService {
     @POST("tienda/comprar/{idProd}/{idUser}")
     Call<Void> comprar(@Path("idProd") String idProd, @Path("idUser") String idUser);
 
-    @GET("usuarios/{idUser}/inventario")
+    @GET("tienda/inventario/{idUser}")
     Call<List<Producto>> getInventario(@Path("idUser") String idUser);
 
     @GET("tienda/productos")

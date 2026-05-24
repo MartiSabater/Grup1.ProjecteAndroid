@@ -1,4 +1,4 @@
-package com.example.sigmadsa;
+package com.example.sigmadsa.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sigmadsa.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,9 +20,16 @@ public class LoginActivity extends AppCompatActivity {
 
         // Comprobar si hay una sesión activa
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String savedUserId = prefs.getString("userId", null);
+        if (savedUserId != null) {
+            android.content.Intent intent = new android.content.Intent(this, ShopActivity.class);
+            intent.putExtra(LoadingActivity.EXTRA_USER_ID, savedUserId);
+            startActivity(intent);
+            finish();
+            return;
+        }
         String savedUsername = prefs.getString("username", null);
         if (savedUsername != null) {
-            // Si ya hay usuario, vamos directo a la tienda
             android.content.Intent intent = new android.content.Intent(this, ShopActivity.class);
             intent.putExtra(LoadingActivity.EXTRA_USERNAME, savedUsername);
             startActivity(intent);

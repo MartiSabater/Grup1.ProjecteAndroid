@@ -18,7 +18,7 @@
         android:theme="@style/Theme.SigmaDSA" >
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".viewmodel.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,19 +27,19 @@
         </activity>
 
         <activity
-            android:name=".ShopActivity"
+            android:name=".viewmodel.ShopActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".viewmodel.RegisterActivity"
             android:exported="false" />
 
         <activity
-            android:name=".LoadingActivity"
+            android:name=".viewmodel.LoadingActivity"
             android:exported="false" />
 
         <activity
-            android:name=".InventarioActivity"
+            android:name=".viewmodel.InventarioActivity"
             android:exported="false" />
 
     </application>

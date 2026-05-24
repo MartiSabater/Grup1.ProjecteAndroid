@@ -1,4 +1,4 @@
-package com.example.sigmadsa;
+package com.example.sigmadsa.viewmodel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sigmadsa.R;
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
 import com.example.sigmadsa.api.LoginRequest;
@@ -29,6 +30,7 @@ public class LoadingActivity extends AppCompatActivity {
 
     public static final String EXTRA_ACTION = "extra_action";
     public static final String EXTRA_USERNAME = "extra_username";
+    public static final String EXTRA_USER_ID = "extra_user_id";
     public static final String EXTRA_PASSWORD = "extra_password";
     public static final String EXTRA_EMAIL = "extra_email";
     public static final String EXTRA_NAME = "extra_name";
@@ -71,12 +73,15 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    saveSession(username);
+                    String userId = response.body().getId();
+                    if (userId == null) userId = username;
+                    saveSession(username, userId);
                     tvLoadingText.setText("");
+                    final String uid = userId;
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startShop(username);
+                            startShop(username, uid);
                         }
                     }, 1500);
                 } else {
@@ -114,12 +119,15 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    saveSession(username);
+                    String userId = response.body().getId();
+                    if (userId == null) userId = username;
+                    saveSession(username, userId);
                     tvLoadingText.setText("Registro completo. Redirigiendo . . .");
+                    final String uid = userId;
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startShop(username);
+                            startShop(username, uid);
                         }
                     }, 1500);
                 } else {
@@ -164,17 +172,19 @@ public class LoadingActivity extends AppCompatActivity {
         }, 2500);
     }
 
-    private void startShop(String username) {
+    private void startShop(String username, String userId) {
         Intent intent = new Intent(LoadingActivity.this, ShopActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
+        intent.putExtra(EXTRA_USER_ID, userId);
         startActivity(intent);
         finish();
     }
 
-    private void saveSession(String username) {
+    private void saveSession(String username, String userId) {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", username);
+        editor.putString("userId", userId);
         editor.apply();
     }
 
@@ -198,7 +208,7 @@ public class LoadingActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startShop("guest");
+                startShop("guest", "guest");
             }
         }, 5000);
     }
