@@ -24,6 +24,9 @@ public interface ApiService {
     @GET("tienda/inventario/{idUser}")
     Call<List<Producto>> getInventario(@Path("idUser") String idUser);
 
+    @GET("auth/usuarios/{idUser}/ects")
+    Call<ECTSResponse> getUserEcts(@Path("idUser") String idUser);
+
     @GET("tienda/productos")
     Call<List<BotiguaResponse>> getProductos();
 

@@ -74,8 +74,10 @@ public class LoadingActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String userId = response.body().getId();
+                    String token = response.body().getToken();
+                    ApiClient.setAuthToken(token);
                     if (userId == null) userId = username;
-                    saveSession(username, userId);
+                    saveSession(username, userId, token);
                     tvLoadingText.setText("");
                     final String uid = userId;
                     handler.postDelayed(new Runnable() {
@@ -120,8 +122,10 @@ public class LoadingActivity extends AppCompatActivity {
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String userId = response.body().getId();
+                    String token = response.body().getToken();
+                    ApiClient.setAuthToken(token);
                     if (userId == null) userId = username;
-                    saveSession(username, userId);
+                    saveSession(username, userId, token);
                     tvLoadingText.setText("Registro completo. Redirigiendo . . .");
                     final String uid = userId;
                     handler.postDelayed(new Runnable() {
@@ -180,11 +184,12 @@ public class LoadingActivity extends AppCompatActivity {
         finish();
     }
 
-    private void saveSession(String username, String userId) {
+    private void saveSession(String username, String userId, String token) {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", username);
         editor.putString("userId", userId);
+        editor.putString("authToken", token);
         editor.apply();
     }
 

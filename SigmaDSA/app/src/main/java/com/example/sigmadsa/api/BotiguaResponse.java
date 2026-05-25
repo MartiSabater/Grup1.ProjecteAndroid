@@ -16,6 +16,8 @@ BotiguaResponse {
     @SerializedName("precio")
     private int precio;
 
+
+
     public BotiguaResponse() {}
 
     public BotiguaResponse(int id, String nombre, String descripcion, int precio) {

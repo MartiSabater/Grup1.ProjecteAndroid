@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
@@ -41,7 +42,7 @@
             android:textColor="@color/label_gray"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_shop_title" />
+            tools:layout_editor_absoluteY="62dp" />
 
         <Button
             android:id="@+id/btn_salir"
@@ -599,13 +600,13 @@
 
         <Button
             android:id="@+id/btn_inventario_link"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_width="111dp"
+            android:layout_height="26dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/button_outline"
-            android:text="VEURE INVENTARI"
-            android:textColor="@color/shop_text_cyan"
-            android:textSize="10sp"
+            android:text="Ver inventario"
+            android:textColor="@color/black"
+            android:textSize="8sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
             app:layout_constraintStart_toEndOf="@id/tv_inventario"

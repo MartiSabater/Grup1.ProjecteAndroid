@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +15,9 @@ import com.example.sigmadsa.R;
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
 import com.example.sigmadsa.api.BotiguaResponse;
+import com.example.sigmadsa.api.ECTSResponse;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +29,7 @@ public class ShopActivity extends AppCompatActivity {
     private String username;
     private String userId;
     private ApiService apiService;
+    private TextView tvEcts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,13 @@ public class ShopActivity extends AppCompatActivity {
             if (username == null) username = "guest";
             userId = username;
         }
+        Log.d("ShopActivity", "Starting with userId=" + userId + " username=" + username);
+
+        // Inicializar TextView de ECTS
+        tvEcts = findViewById(R.id.tv_user_info);
 
         cargarProductos();
+        cargarEcts();
 
         Button btnSalir = findViewById(R.id.btn_salir);
         btnSalir.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +75,38 @@ public class ShopActivity extends AppCompatActivity {
                 android.content.Intent intent = new android.content.Intent(ShopActivity.this, InventarioActivity.class);
                 intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void cargarEcts() {
+        apiService.getUserEcts(userId).enqueue(new Callback<ECTSResponse>() {
+            @Override
+            public void onResponse(Call<ECTSResponse> call, Response<ECTSResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int ects = response.body().getEcts();
+                    tvEcts.setText("ECTS: " + ects);
+                } else {
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        errorBody = e.getMessage();
+                    }
+                    String requestUrl = response.raw() != null && response.raw().request() != null
+                            ? response.raw().request().url().toString()
+                            : "unknown";
+                    Log.e("ShopActivity", "getUserEcts failed: url=" + requestUrl + " code=" + response.code() + " body=" + errorBody);
+                    Toast.makeText(ShopActivity.this, "Error ECTS: " + response.code(), Toast.LENGTH_LONG).show();
+                    tvEcts.setText("ECTS: Error");
+                }
+            }
+            @Override
+            public void onFailure(Call<ECTSResponse> call, Throwable t) {
+                Log.e("ShopActivity", "getUserEcts onFailure", t);
+                tvEcts.setText("ECTS: -");
             }
         });
     }
@@ -139,6 +180,7 @@ public class ShopActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(ShopActivity.this, "Compra confirmada: " + idProd, Toast.LENGTH_SHORT).show();
+                    cargarEcts(); // Actualizar ECTS después de la compra
                 } else {
                     Toast.makeText(ShopActivity.this, "Error: Saldo insuficiente o problema en el servidor", Toast.LENGTH_LONG).show();
                 }
@@ -153,8 +195,9 @@ public class ShopActivity extends AppCompatActivity {
 
     private void logout() {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        prefs.edit().remove("username").remove("userId").apply();
-        
+        prefs.edit().remove("username").remove("userId").remove("authToken").apply();
+        ApiClient.setAuthToken(null);
+
         Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
