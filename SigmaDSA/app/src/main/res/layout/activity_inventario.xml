@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
-    android:padding="16dp">
+    android:padding="24dp">
 
     <TextView
         android:id="@+id/tv_inventario_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="REGISTRO DE EQUIPAMIENTO"
         android:textColor="@color/shop_text_cyan"
         android:textSize="10sp"
@@ -21,17 +22,19 @@
         android:id="@+id/tv_inventario_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="Mi Inventario"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_inventario_header" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_inventario_header" />
 
     <Button
         android:id="@+id/btn_tienda"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/shop_button_exit"
         android:text="BOTIGA"
         android:textColor="@color/white"

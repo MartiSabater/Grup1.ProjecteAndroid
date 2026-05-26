@@ -22,6 +22,14 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
 
+    private boolean isPasswordValid(String password) {
+        return password.length() >= 8
+                && password.matches(".*[A-Z].*")
+                && password.matches(".*[a-z].*")
+                && password.matches(".*\\d.*")
+                && password.matches(".*[^A-Za-z0-9].*");
+    }
+
     private void validatePasswords() {
         String pass = etPassword.getText().toString();
         String confirmPass = etConfirmPassword.getText().toString();
@@ -29,6 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
         if (confirmPass.isEmpty()) {
             tvPasswordError.setVisibility(View.GONE);
         } else if (!pass.equals(confirmPass)) {
+            tvPasswordError.setText(R.string.error_password_mismatch);
+            tvPasswordError.setVisibility(View.VISIBLE);
+        } else if (!isPasswordValid(pass)) {
+            tvPasswordError.setText(R.string.error_password_requirements);
             tvPasswordError.setVisibility(View.VISIBLE);
         } else {
             tvPasswordError.setVisibility(View.GONE);
@@ -126,6 +138,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!password.equals(confirmPass)) {
+                    tvPasswordError.setText(R.string.error_password_mismatch);
+                    tvPasswordError.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (!isPasswordValid(password)) {
+                    tvPasswordError.setText(R.string.error_password_requirements);
                     tvPasswordError.setVisibility(View.VISIBLE);
                     return;
                 }

@@ -10,15 +10,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/tv_header_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/inventario_desbloqueable"
             android:textColor="@color/shop_text_cyan"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,11 +39,13 @@
             android:id="@+id/tv_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="44dp"
             android:text="@string/user_ects"
             android:textColor="@color/label_gray"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="62dp" />
+            app:layout_constraintTop_toTopOf="@+id/tv_shop_title" />
 
         <Button
             android:id="@+id/btn_salir"
@@ -62,7 +65,7 @@
             android:id="@+id/tabs_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tv_user_info">
 
@@ -600,9 +603,9 @@
 
         <Button
             android:id="@+id/btn_inventario_link"
-            android:layout_width="111dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="112dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="48dp"
             android:background="@drawable/button_outline"
             android:text="Ver inventario"
             android:textColor="@color/black"
@@ -610,7 +613,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
             app:layout_constraintStart_toEndOf="@id/tv_inventario"
-            app:layout_constraintTop_toTopOf="@id/tv_inventario" />
+            app:layout_constraintTop_toTopOf="@id/tv_inventario"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/tv_inventario_desc"
