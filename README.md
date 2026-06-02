@@ -1,1 +1,1 @@
-La Api Rest esta mitj començada 
+Em falta acabar de conectar amb el Api
