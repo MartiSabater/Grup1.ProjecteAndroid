@@ -1,1 +1,1 @@
-La Api Rest esta mitj començada 
+En aquest Minim, funcionen el get dels events i el afegir usuari a l'event com es poden veure a les captures del swagger. En android tambè funciona y dona 200 al insertar usuari al event. El problema es que no he pogut incorporar les captures perque el Androir m'ha deixat de funcionar y no s'inicia l'emulador. Pero en principi el codi es correcte y retorna tot correctament amb una llista d'events on pots insciure't i el boto desapareix perque no et puguis inscrire més d'una vegada.
