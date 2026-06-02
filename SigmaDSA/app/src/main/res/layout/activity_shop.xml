@@ -627,6 +627,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_inventario" />
 
+        <TextView
+            android:id="@+id/tv_equipos_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/equipos_disponibles"
+            android:textColor="@color/shop_text_cyan"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_inventario_desc" />
+
+        <TextView
+            android:id="@+id/tv_equipos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipos"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_equipos_label" />
+
+        <Button
+            android:id="@+id/btn_equipos_link"
+            android:layout_width="112dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="48dp"
+            android:background="@drawable/button_outline"
+            android:text="@string/ver_equipos"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_equipos"
+            app:layout_constraintStart_toEndOf="@id/tv_equipos"
+            app:layout_constraintTop_toTopOf="@id/tv_equipos"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tv_equipos_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/equipos_desc"
+            android:textColor="@color/label_gray"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_equipos" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

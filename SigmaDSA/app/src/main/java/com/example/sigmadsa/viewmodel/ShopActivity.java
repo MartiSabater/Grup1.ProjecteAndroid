@@ -77,6 +77,16 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnEquipos = findViewById(R.id.btn_equipos_link);
+        btnEquipos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Intent intent = new android.content.Intent(ShopActivity.this, EquiposActivity.class);
+                intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void cargarEcts() {

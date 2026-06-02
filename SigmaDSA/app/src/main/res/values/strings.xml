@@ -27,6 +27,10 @@
     <string name="objetos_recuperados">OBJETOS RECUPERADOS</string>
     <string name="inventario">Inventario</string>
     <string name="inventario_desc">Compra objetos para desbloquear nuevas pistas.</string>
+    <string name="equipos_disponibles">EQUIPOS DISPONIBLES</string>
+    <string name="equipos">Equipos</string>
+    <string name="ver_equipos">Ver equipos</string>
+    <string name="equipos_desc">Unete a un grupo operativo existente.</string>
     <string name="nombre">NOMBRE</string>
     <string name="contrasena">CONTRASEÑA</string>
     <string name="correo_electronico">CORREO ELECTRÓNICO</string>

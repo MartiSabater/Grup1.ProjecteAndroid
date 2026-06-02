@@ -102,7 +102,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
-                showErrorAndReturn(getConnectionErrorMessage(t), LoginActivity.class);
+                showErrorAndReturn(getConnectionErrorMessage(t) + "\nURL: " + call.request().url(), LoginActivity.class);
 
             }
         });
@@ -150,14 +150,14 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 t.printStackTrace();
-                showErrorAndReturn(getConnectionErrorMessage(t), RegisterActivity.class);
+                showErrorAndReturn(getConnectionErrorMessage(t) + "\nURL: " + call.request().url(), RegisterActivity.class);
             }
         });
     }
 
     private String getConnectionErrorMessage(Throwable t) {
         if (t instanceof IOException || t instanceof UnknownHostException || t instanceof ConnectException || t instanceof SocketTimeoutException) {
-            return "Error.";
+            return "Error: " + t.getClass().getSimpleName() + (t.getMessage() != null ? " - " + t.getMessage() : "");
         }
         return "Error: " + t.getClass().getSimpleName() + (t.getMessage() != null ? " - " + t.getMessage() : "");
     }
