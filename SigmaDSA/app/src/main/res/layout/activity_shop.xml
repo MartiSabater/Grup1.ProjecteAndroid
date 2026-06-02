@@ -616,6 +616,21 @@
             app:layout_constraintTop_toTopOf="@id/tv_inventario"
             app:layout_constraintVertical_bias="1.0" />
 
+        <Button
+            android:id="@+id/btn_eventos_link"
+            android:layout_width="112dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/button_outline"
+            android:text="@string/ver_eventos"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
+            app:layout_constraintStart_toEndOf="@id/btn_inventario_link"
+            app:layout_constraintTop_toTopOf="@id/tv_inventario"
+            app:layout_constraintVertical_bias="1.0" />
+
         <TextView
             android:id="@+id/tv_inventario_desc"
             android:layout_width="wrap_content"

@@ -2,8 +2,7 @@ package com.example.sigmadsa.api;
 
 import com.google.gson.annotations.SerializedName;
 
-public class
-BotiguaResponse {
+public class BotiguaResponse {
     @SerializedName("id")
     private int id;
 

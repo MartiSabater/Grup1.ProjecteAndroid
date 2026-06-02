@@ -41,4 +41,12 @@
     <string name="repite_clave_hint">Repite tu contraseña</string>
     <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
     <string name="error_password_requirements">La contraseña debe contener mayúsculas, minúsculas, numeros, carácter especial y debe ser de 8 o más carácteres.</string>
+    <string name="eventos_title">Eventos disponibles</string>
+    <string name="eventos_desc">Próximos eventos disponobles para inscripción.</string>
+    <string name="ver_eventos">Ver eventos</string>
+    <string name="inscribirse">Inscribirse</string>
+    <string name="evento_inscrito">Inscripción correcta.</string>
+    <string name="error_cargar_eventos">Error al cargar eventos.</string>
+    <string name="error_inscribirse_evento">Error al inscribirse en el evento.</string>
+    <string name="no_eventos_disponibles">No hay eventos disponibles.</string>
 </resources>

@@ -77,6 +77,16 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnEventos = findViewById(R.id.btn_eventos_link);
+        btnEventos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShopActivity.this, EventActivity.class);
+                intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void cargarEcts() {

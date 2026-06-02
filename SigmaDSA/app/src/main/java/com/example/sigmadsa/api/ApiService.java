@@ -1,5 +1,6 @@
 package com.example.sigmadsa.api;
 
+import com.example.sigmadsa.api.EventResponse;
 import com.example.sigmadsa.models.Producto;
 
 import java.util.List;
@@ -29,6 +30,12 @@ public interface ApiService {
 
     @GET("tienda/productos")
     Call<List<BotiguaResponse>> getProductos();
+
+    @GET("eventos")
+    Call<List<EventResponse>> getEventos();
+
+    @POST("eventos/inscribir/{idEvento}/{idUser}")
+    Call<Void> inscribirEvento(@Path("idEvento") String idEvento, @Path("idUser") String idUser);
 
     @DELETE("tienda/inventario/{idProd}/{idUser}")
     Call<Void> eliminarProducto(@Path("idProd") String idProd, @Path("idUser") String idUser);
