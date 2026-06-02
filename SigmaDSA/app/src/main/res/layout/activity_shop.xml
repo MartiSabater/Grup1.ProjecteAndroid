@@ -603,9 +603,9 @@
 
         <Button
             android:id="@+id/btn_inventario_link"
-            android:layout_width="112dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="24dp"
             android:background="@drawable/button_outline"
             android:text="Ver inventario"
             android:textColor="@color/black"
@@ -613,8 +613,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
             app:layout_constraintStart_toEndOf="@id/tv_inventario"
-            app:layout_constraintTop_toTopOf="@id/tv_inventario"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@id/tv_inventario" />
 
         <TextView
             android:id="@+id/tv_inventario_desc"
@@ -626,6 +625,34 @@
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_inventario" />
+
+        <TextView
+            android:id="@+id/tv_mi_equipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/mi_equipo_label"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_inventario_desc" />
+
+        <Button
+            android:id="@+id/btn_team_link"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/button_outline"
+            android:text="Mi equipo"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_mi_equipo"
+            app:layout_constraintStart_toEndOf="@id/tv_mi_equipo"
+            app:layout_constraintTop_toTopOf="@id/tv_mi_equipo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

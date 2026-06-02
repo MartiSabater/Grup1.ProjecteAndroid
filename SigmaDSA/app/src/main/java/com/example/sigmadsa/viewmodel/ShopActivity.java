@@ -77,6 +77,18 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Configuracio boto per veure el meu equip.
+        Button btnTeamLink = findViewById(R.id.btn_team_link);
+        btnTeamLink.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                android.content.Intent intent = new android.content.Intent(ShopActivity.this, TeamActivity.class);
+                intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
+                startActivity(intent);
+
+            }
+        });
     }
 
     private void cargarEcts() {

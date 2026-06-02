@@ -32,4 +32,7 @@ public interface ApiService {
 
     @DELETE("tienda/inventario/{idProd}/{idUser}")
     Call<Void> eliminarProducto(@Path("idProd") String idProd, @Path("idUser") String idUser);
+
+    @GET("user/{idUser}/team")
+    Call<TeamResponse> getUserTeam(@Path("idUser") String idUser);
 }
