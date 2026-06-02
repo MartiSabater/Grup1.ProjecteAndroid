@@ -41,4 +41,11 @@
     <string name="repite_clave_hint">Repite tu contraseña</string>
     <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
     <string name="error_password_requirements">La contraseña debe contener mayúsculas, minúsculas, numeros, carácter especial y debe ser de 8 o más carácteres.</string>
+    <string name="assistent_title">ASISTENTE IA</string>
+    <string name="assistent_subtitle">Pregunta como superar una pantalla o resolver una duda frecuente.</string>
+    <string name="assistent_question_hint">Escribe tu pregunta...</string>
+    <string name="assistent_ask">PREGUNTAR</string>
+    <string name="assistent_empty_answer">La respuesta aparecera aqui.</string>
+    <string name="assistent_button">ASISTENTE IA</string>
+    <string name="volver">VOLVER</string>
 </resources>

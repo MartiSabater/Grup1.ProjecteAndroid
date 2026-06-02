@@ -41,6 +41,9 @@
         <activity
             android:name=".viewmodel.InventarioActivity"
             android:exported="false" />
+        <activity
+            android:name=".viewmodel.AssistentActivity"
+            android:exported="false" />
 
     </application>
 

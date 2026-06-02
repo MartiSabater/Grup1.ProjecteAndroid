@@ -77,6 +77,15 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnAssistent = findViewById(R.id.btn_assistent_link);
+        btnAssistent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShopActivity.this, AssistentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void cargarEcts() {

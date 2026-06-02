@@ -18,7 +18,7 @@ BotiguaResponse {
 
 
 
-    public BotiguaResponse() {}
+    /*public BotiguaResponse() {}
 
     public BotiguaResponse(int id, String nombre, String descripcion, int precio) {
         this.id = id;
@@ -26,7 +26,7 @@ BotiguaResponse {
         this.descripcion = descripcion;
         this.precio = precio;
     }
-
+*/
     public int getId() {
         return id;
     }

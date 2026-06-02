@@ -603,9 +603,9 @@
 
         <Button
             android:id="@+id/btn_inventario_link"
-            android:layout_width="112dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="48dp"
+            android:layout_width="88dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="32dp"
             android:background="@drawable/button_outline"
             android:text="Ver inventario"
             android:textColor="@color/black"
@@ -614,6 +614,21 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
             app:layout_constraintStart_toEndOf="@id/tv_inventario"
             app:layout_constraintTop_toTopOf="@id/tv_inventario"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/btn_assistent_link"
+            android:layout_width="112dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/shop_button_buy"
+            android:text="@string/assistent_button"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btn_inventario_link"
+            app:layout_constraintStart_toEndOf="@id/btn_inventario_link"
+            app:layout_constraintTop_toTopOf="@id/btn_inventario_link"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView

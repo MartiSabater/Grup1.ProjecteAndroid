@@ -29,7 +29,8 @@ public interface ApiService {
 
     @GET("tienda/productos")
     Call<List<BotiguaResponse>> getProductos();
-
+    @POST("assistant/ask") //https://dsa1.upc.edu/dsaApp/assistant/ask
+    Call<AssistentResponse> askAssistent(@Body AssistentRequest request);
     @DELETE("tienda/inventario/{idProd}/{idUser}")
     Call<Void> eliminarProducto(@Path("idProd") String idProd, @Path("idUser") String idUser);
 }
