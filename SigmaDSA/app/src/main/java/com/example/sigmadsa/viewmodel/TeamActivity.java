@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,12 +93,49 @@ public class TeamActivity extends AppCompatActivity {
 
             TextView tvName = itemView.findViewById(R.id.tv_player_name);
             TextView tvPoints = itemView.findViewById(R.id.tv_player_points);
-            // ImageView ivAvatar = itemView.findViewById(R.id.iv_avatar); // Usamos placeholder por ahora
+            ImageView ivAvatar = itemView.findViewById(R.id.iv_avatar);
 
             tvName.setText(member.getName());
             tvPoints.setText(String.valueOf(member.getPoints()));
+            ivAvatar.setImageResource(getAvatarResource(member.getAvatar()));
 
             llMembersContainer.addView(itemView);
         }
+    }
+
+    private int getAvatarResource(String avatar) {
+        if (avatar == null || avatar.trim().isEmpty()) {
+            return R.drawable.avatar_12;
+        }
+
+        String normalizedAvatar = avatar.toLowerCase().trim();
+
+        if (normalizedAvatar.contains("avatar_1.") || normalizedAvatar.equals("avatar_1") || normalizedAvatar.equals("1")) {
+            return R.drawable.avatar_1;
+        } else if (normalizedAvatar.contains("avatar_2.") || normalizedAvatar.equals("avatar_2") || normalizedAvatar.equals("2")) {
+            return R.drawable.avatar_2;
+        } else if (normalizedAvatar.contains("avatar_3.") || normalizedAvatar.equals("avatar_3") || normalizedAvatar.equals("3")) {
+            return R.drawable.avatar_3;
+        } else if (normalizedAvatar.contains("avatar_4.") || normalizedAvatar.equals("avatar_4") || normalizedAvatar.equals("4")) {
+            return R.drawable.avatar_4;
+        } else if (normalizedAvatar.contains("avatar_5.") || normalizedAvatar.equals("avatar_5") || normalizedAvatar.equals("5")) {
+            return R.drawable.avatar_5;
+        } else if (normalizedAvatar.contains("avatar_6.") || normalizedAvatar.equals("avatar_6") || normalizedAvatar.equals("6")) {
+            return R.drawable.avatar_6;
+        } else if (normalizedAvatar.contains("avatar_7.") || normalizedAvatar.equals("avatar_7") || normalizedAvatar.equals("7")) {
+            return R.drawable.avatar_7;
+        } else if (normalizedAvatar.contains("avatar_8.") || normalizedAvatar.equals("avatar_8") || normalizedAvatar.equals("8")) {
+            return R.drawable.avatar_8;
+        } else if (normalizedAvatar.contains("avatar_9.") || normalizedAvatar.equals("avatar_9") || normalizedAvatar.equals("9")) {
+            return R.drawable.avatar_9;
+        } else if (normalizedAvatar.contains("avatar_10.") || normalizedAvatar.equals("avatar_10") || normalizedAvatar.equals("10")) {
+            return R.drawable.avatar_10;
+        } else if (normalizedAvatar.contains("avatar_11.") || normalizedAvatar.equals("avatar_11") || normalizedAvatar.equals("11")) {
+            return R.drawable.avatar_11;
+        } else if (normalizedAvatar.contains("avatar_12.") || normalizedAvatar.equals("avatar_12") || normalizedAvatar.equals("12")) {
+            return R.drawable.avatar_12;
+        }
+
+        return R.drawable.avatar_12;
     }
 }
