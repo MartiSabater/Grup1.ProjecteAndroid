@@ -18,6 +18,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (shouldOpenTeamScreenOnStartup()) {
+            android.content.Intent teamIntent = new android.content.Intent(this, TeamActivity.class);
+            teamIntent.putExtra(LoadingActivity.EXTRA_USER_ID, "demo");
+            startActivity(teamIntent);
+            finish();
+            return;
+        }
+
         // Comprobar si hay una sesión activa
         SharedPreferences prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String savedUserId = prefs.getString("userId", null);
@@ -75,5 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean shouldOpenTeamScreenOnStartup() {
+        // TEMP EJ2: abrir directamente la clasificacion del equipo sin iniciar sesion.
+        return true;
     }
 }
