@@ -11,12 +11,15 @@
     <string name="registro">REGISTRO</string>
     <string name="usuario">USUARIO</string>
     <string name="password">PASSWORD</string>
-    <string name="username_hint">Nombre de usuario</string>
+    <string name="username_hint">Nombre de usuario o correo</string>
     <string name="password_hint">Contraseña</string>
     <string name="entrar_sistema">ENTRAR AL SISTEMA</string>
     <string name="account_created">Bienvenido.</string>
     <string name="inventario_desbloqueable">INVENTARIO DESBLOQUEABLE</string>
     <string name="tienda_sigma">Tienda SIGMA</string>
+    <string name="tienda">TIENDA</string>
+    <string name="ranking">RANKING</string>
+    <string name="avatar">Avatar</string>
     <string name="user_ects">carla - 100 ECTS</string>
     <string name="salir">CERRAR SESIÓN</string>
     <string name="misiones">MISIONES</string>
@@ -26,6 +29,7 @@
     <string name="comprar">COMPRAR</string>
     <string name="objetos_recuperados">OBJETOS RECUPERADOS</string>
     <string name="inventario">Inventario</string>
+    <string name="ver_inventario">Ver inventario</string>
     <string name="inventario_desc">Compra objetos para desbloquear nuevas pistas.</string>
     <string name="nombre">NOMBRE</string>
     <string name="contrasena">CONTRASEÑA</string>
@@ -40,5 +44,12 @@
     <string name="crear_clave_sigma_hint">Contraseña</string>
     <string name="repite_clave_hint">Repite tu contraseña</string>
     <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
-    <string name="error_password_requirements">La contraseña debe contener mayúsculas, minúsculas, numeros, carácter especial y debe ser de 8 o más carácteres.</string>
+    <string name="error_password_requirements">La contraseña debe contener una mayúscula, un número, un carácter especial y debe ser de 8 o más caracteres.</string>
+    <string name="assistent_title">ASISTENTE IA</string>
+    <string name="assistent_subtitle">Pregunta como superar una pantalla o resolver una duda frecuente.</string>
+    <string name="assistent_question_hint">Escribe tu pregunta...</string>
+    <string name="assistent_ask">PREGUNTAR</string>
+    <string name="assistent_empty_answer">La respuesta aparecera aqui.</string>
+    <string name="assistent_button">ASISTENTE IA</string>
+    <string name="volver">VOLVER</string>
 </resources>

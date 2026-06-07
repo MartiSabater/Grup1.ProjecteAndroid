@@ -1,78 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="24dp">
 
         <TextView
-            android:id="@+id/tv_header_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/inventario_desbloqueable"
             android:textColor="@color/shop_text_cyan"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_shop_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tienda_sigma"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header_label" />
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_current_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/avatar"
+                android:scaleType="centerCrop"
+                android:src="@drawable/avatar_1" />
+
+            <TextView
+                android:id="@+id/tv_shop_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tienda_sigma"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_salir"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/shop_button_exit"
+                android:text="@string/salir"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="6dp"
             android:text="@string/user_ects"
             android:textColor="@color/label_gray"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_shop_title" />
+            android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btn_salir"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/shop_button_exit"
-            android:text="@string/salir"
-            android:textColor="@color/white"
+        <TextView
+            android:id="@+id/tv_game_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/terminal_box"
+            android:padding="12dp"
+            android:textColor="@color/terminal_green"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/tabs_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_user_info">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tab_shop"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/shop_tab_bg"
+                android:gravity="center"
+                android:text="@string/tienda"
+                android:textColor="@color/shop_text_cyan"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tab_ranking"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/shop_tab_bg"
+                android:gravity="center"
+                android:text="@string/ranking"
+                android:textColor="@color/shop_text_cyan"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tab_missions"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/shop_tab_bg"
                 android:gravity="center"
@@ -80,553 +121,83 @@
                 android:textColor="@color/shop_text_cyan"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginHorizontal="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/shop_tab_bg"
-                android:gravity="center"
-                android:text="@string/profesores"
-                android:textColor="@color/shop_text_cyan"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginHorizontal="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/shop_tab_bg"
-                android:gravity="center"
-                android:text="@string/terminales"
-                android:textColor="@color/shop_text_cyan"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/shop_tab_bg"
-                android:gravity="center"
-                android:text="@string/ects"
-                android:textColor="@color/shop_text_cyan"
-                android:textSize="10sp"
-                android:textStyle="bold" />
         </LinearLayout>
 
-        <GridLayout
-            android:id="@+id/items_grid"
+        <LinearLayout
+            android:id="@+id/section_shop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:columnCount="2"
-            app:layout_constraintTop_toBottomOf="@id/tabs_container">
+            android:orientation="vertical">
 
-            <!-- Item 1 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/ll_products"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/item1_id"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-1"
-                    android:textColor="@color/shop_text_cyan"
-                    android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item1_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Carga EMP"
+                    android:layout_weight="1"
+                    android:text="@string/inventario"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item1_id" />
-
-                <TextView
-                    android:id="@+id/item1_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Desactiva drones temporalmente"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item1_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item1_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="4 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn1_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn1_buy" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btn1_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
+                    android:id="@+id/btn_inventario_link"
+                    android:layout_width="128dp"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/button_outline"
+                    android:text="@string/ver_inventario"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item1_price"
-                    app:layout_constraintTop_toBottomOf="@id/item1_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Item 2 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/item2_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-2"
-                    android:textColor="@color/shop_text_cyan"
                     android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item2_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="USB amarillo"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item2_id" />
-
-                <TextView
-                    android:id="@+id/item2_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Obtiene fragmento_codigo2"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item2_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item2_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="4 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn2_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn2_buy" />
+                    android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btn2_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:id="@+id/btn_assistent_link"
+                    android:layout_width="116dp"
+                    android:layout_height="34dp"
                     android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
+                    android:text="@string/assistent_button"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item2_price"
-                    app:layout_constraintTop_toBottomOf="@id/item2_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Item 3 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/item3_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-3"
-                    android:textColor="@color/shop_text_cyan"
                     android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/item3_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Tarjeta temporal"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item3_id" />
-
-                <TextView
-                    android:id="@+id/item3_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Acceso a despachos"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item3_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item3_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="2 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn3_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn3_buy" />
-
-                <Button
-                    android:id="@+id/btn3_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item3_price"
-                    app:layout_constraintTop_toBottomOf="@id/item3_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Item 4 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_inventario_desc"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
+                android:layout_marginTop="4dp"
+                android:text="@string/inventario_desc"
+                android:textColor="@color/label_gray"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/item4_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-4"
-                    android:textColor="@color/shop_text_cyan"
-                    android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item4_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Botiquin"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item4_id" />
-
-                <TextView
-                    android:id="@+id/item4_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Sube 50% de vida"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item4_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item4_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="2 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn4_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn4_buy" />
-
-                <Button
-                    android:id="@+id/btn4_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item4_price"
-                    app:layout_constraintTop_toBottomOf="@id/item4_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Item 5 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/item5_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-5"
-                    android:textColor="@color/shop_text_cyan"
-                    android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item5_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Bateria de seguridad"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item5_id" />
-
-                <TextView
-                    android:id="@+id/item5_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Para abrir laboratorio"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item5_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item5_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="3 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn5_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn5_buy" />
-
-                <Button
-                    android:id="@+id/btn5_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item5_price"
-                    app:layout_constraintTop_toBottomOf="@id/item5_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Item 6 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/shop_card_bg"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/item6_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shop_tab_bg"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:text="OBJ-6"
-                    android:textColor="@color/shop_text_cyan"
-                    android:textSize="8sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item6_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Ampliación del mapa"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item6_id" />
-
-                <TextView
-                    android:id="@+id/item6_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Ver zonas ocultas"
-                    android:textColor="@color/label_gray"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/item6_name"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/item6_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="1 ECTS"
-                    android:textColor="@color/terminal_green"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/btn6_buy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn6_buy" />
-
-                <Button
-                    android:id="@+id/btn6_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_button_buy"
-                    android:text="@string/comprar"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/item6_price"
-                    app:layout_constraintTop_toBottomOf="@id/item6_desc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </GridLayout>
-
-        <TextView
-            android:id="@+id/tv_footer_label"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/section_ranking"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/objetos_recuperados"
-            android:textColor="@color/shop_text_cyan"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/items_grid" />
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tv_inventario"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/section_missions"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/inventario"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_footer_label" />
-
-        <Button
-            android:id="@+id/btn_inventario_link"
-            android:layout_width="112dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="48dp"
-            android:background="@drawable/button_outline"
-            android:text="Ver inventario"
-            android:textColor="@color/black"
-            android:textSize="8sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv_inventario"
-            app:layout_constraintStart_toEndOf="@id/tv_inventario"
-            app:layout_constraintTop_toTopOf="@id/tv_inventario"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tv_inventario_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/inventario_desc"
-            android:textColor="@color/label_gray"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_inventario" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
+    </LinearLayout>
 </ScrollView>

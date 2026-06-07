@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sigmadsa.R;
@@ -64,34 +66,42 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     private void executeLogin() {
-        String username = getIntent().getStringExtra(EXTRA_USERNAME);
+        String loginId = getIntent().getStringExtra(EXTRA_USERNAME);
         String password = getIntent().getStringExtra(EXTRA_PASSWORD);
+        boolean loginWithEmail = loginId != null && Patterns.EMAIL_ADDRESS.matcher(loginId).matches();
 
         ApiService apiService = ApiClient.getApiService();
-        Call<LoginResponse> call = apiService.login(new LoginRequest(username, password));
-        call.enqueue(new Callback<LoginResponse>() {
+        LoginRequest request = new LoginRequest(
+                loginWithEmail ? null : loginId,
+                loginWithEmail ? loginId.toLowerCase() : null,
+                password
+        );
+
+        apiService.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String userId = response.body().getId();
                     String token = response.body().getToken();
                     ApiClient.setAuthToken(token);
-                    if (userId == null) userId = username;
-                    saveSession(username, userId, token);
-                    tvLoadingText.setText("");
+                    if (userId == null) {
+                        userId = loginId;
+                    }
+                    saveSession(loginId, userId, token);
+                    tvLoadingText.setText("Sesion iniciada. Redirigiendo . . .");
                     final String uid = userId;
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startShop(username, uid);
+                            startShop(loginId, uid);
                         }
-                    }, 1500);
+                    }, 1000);
                 } else {
-                    String message = "Error: Usuario o contraseña incorrectos";
-                    if (response.code() == 404) {
-                        message = "Usuario no encontrado";
-                    } else if (response.code() == 401) {
-                        message = "Contraseña incorrecta";
+                    String message = "Usuario, correo o contrasena incorrectos";
+                    if (response.code() == 400) {
+                        message = "Rellena usuario o correo y contrasena";
+                    } else if (response.code() == 405) {
+                        message = "Servidor mal configurado para login (405)";
                     } else if (response.code() >= 500) {
                         message = "Imposible conectarse con el servidor";
                     }
@@ -101,9 +111,7 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                t.printStackTrace();
                 showErrorAndReturn(getConnectionErrorMessage(t), LoginActivity.class);
-
             }
         });
     }
@@ -116,15 +124,16 @@ public class LoadingActivity extends AppCompatActivity {
         String avatar = "avatar_1";
 
         ApiService apiService = ApiClient.getApiService();
-        Call<RegisterResponse> call = apiService.register(new RegisterRequest(username, email, name, password, avatar));
-        call.enqueue(new Callback<RegisterResponse>() {
+        apiService.register(new RegisterRequest(username, email, name, password, avatar)).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String userId = response.body().getId();
                     String token = response.body().getToken();
                     ApiClient.setAuthToken(token);
-                    if (userId == null) userId = username;
+                    if (userId == null) {
+                        userId = username;
+                    }
                     saveSession(username, userId, token);
                     tvLoadingText.setText("Registro completo. Redirigiendo . . .");
                     final String uid = userId;
@@ -133,15 +142,15 @@ public class LoadingActivity extends AppCompatActivity {
                         public void run() {
                             startShop(username, uid);
                         }
-                    }, 1500);
+                    }, 1000);
                 } else {
                     String message = "Error en el registro";
                     if (response.code() == 400) {
-                        message = "Datos inválidos o usuario ya existe";
+                        message = "Revisa correo, contrasena y campos obligatorios";
                     } else if (response.code() == 409) {
-                        message = "El usuario ya existe";
+                        message = "Ese usuario o correo ya existe";
                     } else if (response.code() >= 500) {
-                        message = "Error del servidor. Intenta más tarde";
+                        message = "Error del servidor. Intenta mas tarde";
                     }
                     showErrorAndReturn(message, RegisterActivity.class);
                 }
@@ -149,15 +158,23 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                t.printStackTrace();
                 showErrorAndReturn(getConnectionErrorMessage(t), RegisterActivity.class);
             }
         });
     }
 
     private String getConnectionErrorMessage(Throwable t) {
-        if (t instanceof IOException || t instanceof UnknownHostException || t instanceof ConnectException || t instanceof SocketTimeoutException) {
-            return "Error.";
+        if (t instanceof UnknownHostException) {
+            return "No se encuentra el servidor";
+        }
+        if (t instanceof ConnectException) {
+            return "No se puede abrir conexion con el servidor";
+        }
+        if (t instanceof SocketTimeoutException) {
+            return "Tiempo de espera agotado con el servidor";
+        }
+        if (t instanceof IOException) {
+            return "Error de red: " + (t.getMessage() != null ? t.getMessage() : "sin detalle");
         }
         return "Error: " + t.getClass().getSimpleName() + (t.getMessage() != null ? " - " + t.getMessage() : "");
     }
@@ -173,7 +190,7 @@ public class LoadingActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 2500);
+        }, 2000);
     }
 
     private void startShop(String username, String userId) {
@@ -195,9 +212,9 @@ public class LoadingActivity extends AppCompatActivity {
 
     private void startDefaultLoading() {
         final String[] messages = {
-            "> Estableciendo conexión ...",
-            "> Accediento a la base de datos de la EETAC...",
-            "> Acceso concedido. ¡ Bienvenido !."
+                "> Estableciendo conexion ...",
+                "> Accediendo a la base de datos de la EETAC...",
+                "> Acceso concedido. Bienvenido."
         };
 
         for (int i = 0; i < messages.length; i++) {
@@ -207,7 +224,7 @@ public class LoadingActivity extends AppCompatActivity {
                 public void run() {
                     tvLoadingText.setText(messages[index]);
                 }
-            }, i * 1000);
+            }, i * 1000L);
         }
 
         handler.postDelayed(new Runnable() {

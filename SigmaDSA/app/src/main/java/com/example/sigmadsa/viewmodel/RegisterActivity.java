@@ -3,6 +3,7 @@ package com.example.sigmadsa.viewmodel;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -25,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         return password.length() >= 8
                 && password.matches(".*[A-Z].*")
-                && password.matches(".*[a-z].*")
                 && password.matches(".*\\d.*")
                 && password.matches(".*[^A-Za-z0-9].*");
     }
@@ -134,6 +134,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (username.isEmpty() || email.isEmpty() || name.isEmpty() || password.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Completa todos los campos para registrarte", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    tvCorreoError.setVisibility(View.VISIBLE);
+                    Toast.makeText(RegisterActivity.this, "Introduce un correo electronico valido", Toast.LENGTH_LONG).show();
                     return;
                 }
 

@@ -6,7 +6,7 @@ public class Producto
     private Integer id;
     private String nombre;
     private String descripcion;
-    private int ECTS;
+    private int precio;
 
     public Producto() {}
 
@@ -15,7 +15,7 @@ public class Producto
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.ECTS = precio;
+        this.precio = precio;
     }
 
     public Integer getId()
@@ -44,10 +44,10 @@ public class Producto
     }
     public int getPrecio()
     {
-        return ECTS;
+        return precio;
     }
     public void setPrecio(int precio)
     {
-        this.ECTS = precio;
+        this.precio = precio;
     }
 }

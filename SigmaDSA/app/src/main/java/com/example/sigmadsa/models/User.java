@@ -12,7 +12,7 @@ public class User
     private String avatar;
     private int ects;
     private List<Producto> inventario;
-    //private UserGameState gameState;
+    private UserGameState gameState;
 
     public User() {}
 
@@ -61,7 +61,7 @@ public class User
         this.inventario = inventario;
     }
 
-    /*public UserGameState getGameState()
+    public UserGameState getGameState()
     {
         return gameState;
     }
@@ -69,7 +69,7 @@ public class User
     public void setGameState(UserGameState gameState)
     {
         this.gameState = gameState;
-    }*/
+    }
 
     public void addObjeto(Producto p)
     {
