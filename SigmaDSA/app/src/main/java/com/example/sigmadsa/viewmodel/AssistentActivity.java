@@ -1,6 +1,7 @@
 package com.example.sigmadsa.viewmodel;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +16,14 @@ import com.example.sigmadsa.api.ApiService;
 import com.example.sigmadsa.api.AssistentRequest;
 import com.example.sigmadsa.api.AssistentResponse;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AssistentActivity extends AppCompatActivity {
+    private static final String TAG = "SigmaAssistant";
 
     private EditText etQuestion;
     private TextView tvAnswer;
@@ -66,15 +70,34 @@ public class AssistentActivity extends AppCompatActivity {
         btnAsk.setEnabled(false);
         tvAnswer.setText("Consultando asistente...");
 
-        apiService.askAssistent(new AssistentRequest(question)).enqueue(new Callback<AssistentResponse>() {
+        Call<AssistentResponse> request = apiService.askAssistent(new AssistentRequest(question));
+        Log.d(TAG, "Enviando pregunta al asistente");
+        Log.d(TAG, "Backend base URL: " + ApiClient.getBaseUrl());
+        Log.d(TAG, "Endpoint completo: " + request.request().url());
+        Log.d(TAG, "Pregunta: " + question);
+
+        request.enqueue(new Callback<AssistentResponse>() {
             @Override
             public void onResponse(Call<AssistentResponse> call, Response<AssistentResponse> response) {
                 btnAsk.setEnabled(true);
+                Log.d(TAG, "Respuesta HTTP del asistente: " + response.code());
+
                 if (response.isSuccessful() && response.body() != null) {
                     String answer = response.body().getAnswer();
                     if (answer != null && !answer.trim().isEmpty()) {
+                        Log.d(TAG, "Respuesta IA recibida: " + answer);
                         tvAnswer.setText(answer);
                         return;
+                    }
+                    Log.w(TAG, "Respuesta HTTP correcta, pero el body no contiene answer/response/message");
+                } else {
+                    Log.e(TAG, "Error HTTP del asistente: " + response.code() + " " + response.message());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e(TAG, "Cuerpo del error: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            Log.e(TAG, "No se pudo leer el cuerpo del error", e);
+                        }
                     }
                 }
 
@@ -85,6 +108,7 @@ public class AssistentActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AssistentResponse> call, Throwable t) {
                 btnAsk.setEnabled(true);
+                Log.e(TAG, "Fallo de red llamando al asistente: " + call.request().url(), t);
                 tvAnswer.setText("No se puede conectar con el servidor.");
                 Toast.makeText(AssistentActivity.this, "Error de red: " + (t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
             }

@@ -14,6 +14,10 @@ public class ApiClient {
     private static Retrofit retrofit;
     private static String authToken;
 
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
     public static void setAuthToken(String token) {
         authToken = token;
     }
