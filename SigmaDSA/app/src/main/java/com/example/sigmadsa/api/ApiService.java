@@ -3,6 +3,7 @@ package com.example.sigmadsa.api;
 import com.example.sigmadsa.models.Producto;
 import com.example.sigmadsa.models.Mission;
 import com.example.sigmadsa.models.User;
+import com.example.sigmadsa.models.Group;
 
 import java.util.List;
 
@@ -47,6 +48,12 @@ public interface ApiService {
 
     @GET("tienda/productos")
     Call<List<BotiguaResponse>> getProductos();
+
+    @GET("auth/grupos")
+    Call<List<Group>> getGrupos();
+
+    @POST("auth/grupos/{groupId}/join/{userId}")
+    Call<Void> joinGrupo(@Path("groupId") String groupId, @Path("userId") String userId);
 
     @DELETE("tienda/inventario/{idProd}/{idUser}")
     Call<Void> eliminarProducto(@Path("idProd") String idProd, @Path("idUser") String idUser);

@@ -19,6 +19,7 @@ import com.example.sigmadsa.R;
 import com.example.sigmadsa.api.ApiClient;
 import com.example.sigmadsa.api.ApiService;
 import com.example.sigmadsa.api.BotiguaResponse;
+import com.example.sigmadsa.models.Group;
 import com.example.sigmadsa.models.Mission;
 import com.example.sigmadsa.models.Objective;
 import com.example.sigmadsa.models.User;
@@ -44,8 +45,10 @@ public class ShopActivity extends AppCompatActivity {
     private LinearLayout sectionShop;
     private LinearLayout sectionRanking;
     private LinearLayout sectionMissions;
+    private LinearLayout sectionGroups;
     private User currentUser;
     private List<BotiguaResponse> shopProducts;
+    private List<Group> groupList;
     private static final String[] AVATARS = {
             "avatar_1", "avatar_2", "avatar_3", "avatar_4",
             "avatar_5", "avatar_6", "avatar_7", "avatar_8",
@@ -75,6 +78,7 @@ public class ShopActivity extends AppCompatActivity {
         sectionShop = findViewById(R.id.section_shop);
         sectionRanking = findViewById(R.id.section_ranking);
         sectionMissions = findViewById(R.id.section_missions);
+        sectionGroups = findViewById(R.id.section_groups);
 
         findViewById(R.id.tab_shop).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +98,13 @@ public class ShopActivity extends AppCompatActivity {
             public void onClick(View v) {
                 showSection("missions");
                 cargarMisiones();
+            }
+        });
+        findViewById(R.id.tab_groups).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSection("groups");
+                cargarGrupos();
             }
         });
 
@@ -378,6 +389,89 @@ public class ShopActivity extends AppCompatActivity {
         });
     }
 
+    private void cargarGrupos() {
+        sectionGroups.removeAllViews();
+        sectionGroups.addView(simpleText("Cargando grupos...", R.color.label_gray, 14));
+        apiService.getGrupos().enqueue(new Callback<List<Group>>() {
+            @Override
+            public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
+                sectionGroups.removeAllViews();
+                if (!response.isSuccessful() || response.body() == null) {
+                    sectionGroups.addView(simpleText("No se han podido cargar los grupos.", R.color.label_gray, 14));
+                    return;
+                }
+                groupList = response.body();
+                if (groupList.isEmpty()) {
+                    sectionGroups.addView(simpleText("No hay grupos disponibles.", R.color.label_gray, 14));
+                    return;
+                }
+                for (Group group : groupList) {
+                    sectionGroups.addView(groupCard(group));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Group>> call, Throwable t) {
+                sectionGroups.removeAllViews();
+                sectionGroups.addView(simpleText("Error de red al cargar grupos: " + (t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName()), R.color.label_gray, 14));
+            }
+        });
+    }
+
+    private View groupCard(Group group) {
+        LinearLayout card = card();
+        card.setOrientation(LinearLayout.HORIZONTAL);
+        card.setGravity(android.view.Gravity.CENTER_VERTICAL);
+
+        LinearLayout textCol = new LinearLayout(this);
+        textCol.setOrientation(LinearLayout.VERTICAL);
+        textCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        TextView title = simpleText(group.getNombre() != null ? group.getNombre() : "Grupo " + group.getId(), R.color.white, 16);
+        title.setTypeface(null, android.graphics.Typeface.BOLD);
+        TextView desc = simpleText(group.getDescripcion() != null ? group.getDescripcion() : "Sin descripción", R.color.label_gray, 12);
+        TextView members = simpleText("Miembros: " + group.getMiembros(), R.color.terminal_green, 12);
+
+        textCol.addView(title);
+        textCol.addView(desc);
+        textCol.addView(members);
+
+        Button join = new Button(this);
+        join.setText(getString(R.string.unirse));
+        join.setTextColor(getColor(R.color.black));
+        join.setTextSize(10);
+        join.setBackgroundResource(R.drawable.shop_button_buy);
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinGroup(group.getId());
+            }
+        });
+
+        card.addView(textCol);
+        card.addView(join);
+        return card;
+    }
+
+    private void joinGroup(String groupId) {
+        apiService.joinGrupo(groupId, userId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ShopActivity.this, "Te has unido al grupo.", Toast.LENGTH_SHORT).show();
+                    cargarGrupos();
+                } else {
+                    Toast.makeText(ShopActivity.this, "No se ha podido unir al grupo.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ShopActivity.this, "Error de red: " + (t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private String formatMission(Mission mission) {
         StringBuilder text = new StringBuilder();
         text.append("Mision ").append(mission.getId()).append(": ").append(nullToDash(mission.getTitle()));
@@ -404,6 +498,7 @@ public class ShopActivity extends AppCompatActivity {
         sectionShop.setVisibility("shop".equals(section) ? View.VISIBLE : View.GONE);
         sectionRanking.setVisibility("ranking".equals(section) ? View.VISIBLE : View.GONE);
         sectionMissions.setVisibility("missions".equals(section) ? View.VISIBLE : View.GONE);
+        sectionGroups.setVisibility("groups".equals(section) ? View.VISIBLE : View.GONE);
     }
 
     private LinearLayout card() {
