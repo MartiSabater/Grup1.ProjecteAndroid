@@ -3,11 +3,18 @@ package com.example.sigmadsa.viewmodel;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.text.Normalizer;
+import java.util.Locale;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.InputStream;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sigmadsa.R;
@@ -94,9 +101,58 @@ public class InventarioActivity extends AppCompatActivity {
         for (final Producto p : productos) {
             View itemView = getLayoutInflater().inflate(R.layout.shop_item_simple, null);
             TextView tvNombre = itemView.findViewById(R.id.tv_item_nombre);
+            TextView tvDescripcion = itemView.findViewById(R.id.tv_item_descripcion);
+            ImageView ivImagen = itemView.findViewById(R.id.iv_item_image);
             final Button btnEliminar = itemView.findViewById(R.id.btn_eliminar);
-            
+
             tvNombre.setText("> " + p.getNombre());
+            tvDescripcion.setText(p.getDescripcion() != null ? p.getDescripcion() : "");
+
+            // Intentar cargar recurso local si `imagen` viene con el nombre del drawable/mipmap,
+            // y como fallback intentar cargar desde assets/objetos/ (por ejemplo: assets/objetos/espada_icon.png)
+            String img = (p.getImagen() != null && !p.getImagen().isEmpty()) ? p.getImagen() : null;
+            if (img == null && p.getNombre() != null) {
+                img = normalizeResourceName(p.getNombre());
+            }
+            if (img != null && !img.isEmpty()) {
+                int resId = getResources().getIdentifier(img, "drawable", getPackageName());
+                if (resId == 0) resId = getResources().getIdentifier(img, "mipmap", getPackageName());
+                if (resId != 0) {
+                    ivImagen.setImageResource(resId);
+                } else {
+                    // Fallback: buscar en assets/objetos/
+                    AssetManager am = getAssets();
+                    InputStream is = null;
+                    try {
+                        String assetPath = img;
+                        // Si el nombre no contiene carpeta ni extensión, buscar en objetos/<name>.png primero
+                        if (!assetPath.contains("/") && !assetPath.contains(".")) {
+                            String tryPng = "objetos/" + assetPath + ".png";
+                            try {
+                                is = am.open(tryPng);
+                            } catch (Exception e) {
+                                String tryWebp = "objetos/" + assetPath + ".webp";
+                                is = am.open(tryWebp);
+                            }
+                        } else {
+                            // Ruta relativa proporcionada, ábrela tal cual
+                            is = am.open(assetPath);
+                        }
+
+                        if (is != null) {
+                            Bitmap bmp = BitmapFactory.decodeStream(is);
+                            ivImagen.setImageBitmap(bmp);
+                            is.close();
+                        }
+                    } catch (Exception ignored) {
+                        // No encontrar la imagen no rompe la UI; se mantendrá el placeholder.
+                        try {
+                            if (is != null) is.close();
+                        } catch (Exception ex) {
+                        }
+                    }
+                }
+            }
             
             // Configurar el "Long Press" para mostrar el botón de eliminar
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -117,6 +173,16 @@ public class InventarioActivity extends AppCompatActivity {
 
             llLista.addView(itemView);
         }
+    }
+
+    private String normalizeResourceName(String s) {
+        if (s == null) return "";
+        String normalized = Normalizer.normalize(s, Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        normalized = normalized.toLowerCase(Locale.ROOT);
+        normalized = normalized.replaceAll("[^a-z0-9]+", "_");
+        normalized = normalized.replaceAll("^_+|_+$", "");
+        return normalized;
     }
 
     private void eliminarDelInventario(final String idProd, final View btn) {

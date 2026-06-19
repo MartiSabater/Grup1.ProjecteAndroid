@@ -25,6 +25,8 @@ import com.example.sigmadsa.models.User;
 import com.example.sigmadsa.models.UserGameState;
 
 import java.util.List;
+import java.text.Normalizer;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -220,6 +222,16 @@ public class ShopActivity extends AppCompatActivity {
 
         for (BotiguaResponse producto : productos) {
             LinearLayout card = card();
+            card.setOrientation(LinearLayout.HORIZONTAL);
+            card.setGravity(android.view.Gravity.CENTER_VERTICAL);
+
+            // Imagen del producto (buscar drawable por nombre del producto)
+            ImageView ivProducto = new ImageView(this);
+            LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(dp(56), dp(56));
+            imgParams.setMargins(0, 0, dp(12), 0);
+            ivProducto.setLayoutParams(imgParams);
+            ivProducto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ivProducto.setImageResource(getDrawableForProductName(producto.getNombre()));
             TextView code = simpleText("OBJ-" + producto.getId(), R.color.shop_text_cyan, 10);
             TextView name = simpleText(producto.getNombre(), R.color.white, 16);
             name.setTypeface(null, android.graphics.Typeface.BOLD);
@@ -239,13 +251,41 @@ public class ShopActivity extends AppCompatActivity {
                 }
             });
 
-            card.addView(code);
-            card.addView(name);
-            card.addView(desc);
-            card.addView(price);
+            // Añadir vistas al card en orden: imagen + textos + botón
+            card.addView(ivProducto);
+
+            LinearLayout textCol = new LinearLayout(this);
+            textCol.setOrientation(LinearLayout.VERTICAL);
+            textCol.addView(code);
+            textCol.addView(name);
+            textCol.addView(desc);
+            textCol.addView(price);
+
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            textCol.setLayoutParams(textParams);
+
+            card.addView(textCol);
             card.addView(buy);
             llProducts.addView(card);
         }
+    }
+
+    private int getDrawableForProductName(String name) {
+        if (name == null) return R.mipmap.ic_launcher_foreground;
+        String resName = normalizeResourceName(name);
+        int resId = getResources().getIdentifier(resName, "drawable", getPackageName());
+        if (resId == 0) resId = getResources().getIdentifier(resName, "mipmap", getPackageName());
+        return resId != 0 ? resId : R.mipmap.ic_launcher_foreground;
+    }
+
+    private String normalizeResourceName(String s) {
+        if (s == null) return "";
+        String normalized = Normalizer.normalize(s, Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        normalized = normalized.toLowerCase(Locale.ROOT);
+        normalized = normalized.replaceAll("[^a-z0-9]+", "_");
+        normalized = normalized.replaceAll("^_+|_+$", "");
+        return normalized;
     }
 
     private boolean canBuy(BotiguaResponse producto) {

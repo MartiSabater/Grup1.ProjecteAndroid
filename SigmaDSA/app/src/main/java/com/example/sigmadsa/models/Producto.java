@@ -6,6 +6,7 @@ public class Producto
     private Integer id;
     private String nombre;
     private String descripcion;
+    private String imagen;
     private int precio;
 
     public Producto() {}
@@ -16,6 +17,16 @@ public class Producto
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+    }
+
+    public String getImagen()
+    {
+        return imagen;
+    }
+
+    public void setImagen(String imagen)
+    {
+        this.imagen = imagen;
     }
 
     public Integer getId()
