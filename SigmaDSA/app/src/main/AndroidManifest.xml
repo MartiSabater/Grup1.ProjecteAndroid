@@ -46,6 +46,10 @@
             android:name=".viewmodel.AssistentActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".viewmodel.TeamActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

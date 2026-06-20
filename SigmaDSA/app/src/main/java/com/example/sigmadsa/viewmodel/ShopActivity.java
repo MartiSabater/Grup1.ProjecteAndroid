@@ -141,6 +141,16 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
 
+        Button btnTeamLink = findViewById(R.id.btn_team_link);
+        btnTeamLink.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(ShopActivity.this, TeamActivity.class);
+                intent.putExtra(LoadingActivity.EXTRA_USER_ID, userId);
+                startActivity(intent);
+            }
+        });
+
         showSection("shop");
         refrescarUsuario();
         cargarProductos();
