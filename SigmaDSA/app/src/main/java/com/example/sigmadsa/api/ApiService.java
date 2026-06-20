@@ -19,6 +19,9 @@ public interface ApiService {
     @POST("assistant/ask")
     Call<AssistentResponse> askAssistent(@Body AssistentRequest request);
 
+    @POST("assistant/sigma/{username}")
+    Call<AssistentResponse> askSigma(@Path("username") String username, @Body AssistentRequest request);
+
     @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest body);
 
