@@ -149,7 +149,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_input"
             android:hint="@string/nuevo_agente_hint"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+                android:paddingEnd="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/label_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_usuario_label" />
@@ -174,7 +175,8 @@
             android:background="@drawable/rounded_input"
             android:hint="@string/correo_hint"
             android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+                android:paddingEnd="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/label_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_correo_label" />
@@ -210,7 +212,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_input"
             android:hint="@string/nombre_jugador_hint"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+                android:paddingEnd="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/label_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_nombre_label" />

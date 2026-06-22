@@ -148,7 +148,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_input"
             android:hint="@string/username_hint"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+                android:paddingEnd="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/label_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_usuario_label" />
@@ -173,7 +174,8 @@
             android:background="@drawable/rounded_input"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+                android:paddingEnd="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/label_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_password_label" />

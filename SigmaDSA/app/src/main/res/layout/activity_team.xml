@@ -27,7 +27,8 @@
         android:textColor="@color/white"
         android:textSize="10sp"
         android:textStyle="bold"
-        android:paddingHorizontal="12dp"
+        android:paddingStart="12dp"
+                android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
