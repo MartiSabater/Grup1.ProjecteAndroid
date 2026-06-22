@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean shouldOpenTeamScreenOnStartup() {
-        // TEMP EJ2: abrir directamente la clasificacion del equipo sin iniciar sesion.
-        return true;
+        return false;
     }
 }
